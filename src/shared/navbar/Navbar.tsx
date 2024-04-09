@@ -7,8 +7,9 @@ const Navbar = () => {
         <nav className='bg-sky-100 border-b border-[#8f8d9e] py-1'>
             <div className="container mx-auto">
                 <div className="logo">
-                    <Link href="/">
+                    <Link href="/" className='flex items-center gap-2'>
                         <Image src={logo} width="100" height="60" priority alt='Weather logo' className='w-16' />
+                        <h1 className='text-xl font-bold'>Weather</h1>
                     </Link>
                 </div>
             </div>

@@ -1,7 +1,17 @@
-export default function Home() {
+
+import GetCities from "@/actions/cities/cities";
+import DisplayCities from "@/components/homepage/DisplayCities";
+import React from "react";
+
+
+const Home = async () => {
+  const cities: any = await GetCities();
+  // console.log(city)
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-[#54bfea] pt-4">
-      <h1 className="text-xl font-bold"> Weather </h1>
+    <main className="min-h-screen pt-1 herosection">
+      <DisplayCities cities={cities.results} />
     </main>
-  );
+  )
 }
+
+export default Home;
