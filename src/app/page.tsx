@@ -8,7 +8,7 @@ const Home = async () => {
   const cities: any = await GetCities();
   // console.log(city)
   return (
-    <main className="min-h-screen pt-1 herosection">
+    <main className="min-h-screen bg-cyan-700 pt-1 herosection">
       <DisplayCities cities={cities.results} />
     </main>
   )
