@@ -1,20 +1,21 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CityTable from './CityTable'
-
 const DisplayCities = ({ cities }: any) => {
     const [userLocation, setUserLocation] = useState("")
     //    get user location 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const { latitude, longitude } = position.coords;
-            getUsersCurrentLocation(latitude, longitude)
-        }, error => {
-            setUserLocation(error.message)
-        })
-    } else {
-        setUserLocation("Geolocation is not supported by this browser.")
-    }
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const { latitude, longitude } = position.coords;
+                getUsersCurrentLocation(latitude, longitude)
+            }, error => {
+                setUserLocation(error.message)
+            })
+        } else {
+            setUserLocation("Geolocation is not supported by this browser.")
+        }
+    }, [])
     // function for get user's location using opencagedata api
     const getUsersCurrentLocation = async (lat: any, long: any) => {
         const query: any = `${lat},${long}`
