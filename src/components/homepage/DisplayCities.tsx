@@ -23,7 +23,7 @@ const DisplayCities = ({ cities }: any) => {
         try {
             const res = await fetch(apiUrl)
             const userLocation = await res.json();
-            const { city, country, county } = userLocation.results[0].components;
+            const { city, country, county } = userLocation?.results[0]?.components;
             setUserLocation(`${county}, ${city}, ${country}`)
         } catch (error) {
             console.log(error)
