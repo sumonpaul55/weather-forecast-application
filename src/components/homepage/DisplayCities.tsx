@@ -39,7 +39,7 @@ const DisplayCities = ({ allcity }: any) => {
     useEffect(() => {
         if (search) {
             const searchedCity = allcity.filter((city: any) => {
-                return city.name.toLowerCase().includes(search)
+                return city.name.toLowerCase().includes(search.toLowerCase())
             })
             setCities(searchedCity)
         } else {
@@ -60,6 +60,8 @@ const DisplayCities = ({ allcity }: any) => {
                 return selectedValu[0] <= city?.population && selectedValu[1] >= city?.population
             })
             setCities(selectedCity)
+            // clear the search bar
+            setSearch("")
         }
     }, [selected, allcity])
 
@@ -67,8 +69,6 @@ const DisplayCities = ({ allcity }: any) => {
     const hanldeSelect = (e: any) => {
         setSelected(e.target.value)
     }
-    // 
-
 
     return (
         <section className='mt-1 px-2 md:px-0'>
@@ -97,10 +97,20 @@ const DisplayCities = ({ allcity }: any) => {
                                 <option className='text-sm p-2' value="100000-999999">100000+</option>
                             </select>
                         </div>
-                        <div className='flex justify-end items-center gap-2'>
+                        <div className='flex justify-end items-center gap-2 relative'>
                             <label htmlFor="">Search</label>
-                            <input onChange={handleSearch} type="text" placeholder='City Name' className='outline-none border-none md:max-w-[500px] rounded-md py-1 px-2' />
+                            <input onChange={handleSearch} type="text" placeholder='City Name' value={search} className='outline-none border-none md:max-w-[500px] rounded-md py-1 px-2' />
+
+                            <div className='absolute w-full top-10 bg-white'>
+                                {
+                                    cities?.map((items: any, idx: number) => (
+                                        search && search !== items?.name &&
+                                        <div className='px-4 py-2 hover:bg-sky-500 cursor-pointer' onClick={() => setSearch(items?.name)} key={idx}>{items?.name}</div>
+                                    ))
+                                }
+                            </div>
                         </div>
+
                     </div>
                     <table className='w-full mt-5 border text-white'>
                         <thead>
@@ -115,12 +125,12 @@ const DisplayCities = ({ allcity }: any) => {
                         </thead>
                         <tbody>
                             {
-                                cities?.length > 1 ?
-                                    cities?.map((city: any, idx: number) => (
+                                cities?.length < 1 && !search ? <tr><td className='p-2'>{`No Country found with "${selected}`}</td></tr>
+                                    : cities?.map((city: any, idx: number) => (
                                         <CityTable key={idx} city={city} idxnumber={idx}></CityTable>
                                     ))
-                                    :
-                                    <tr><td className='p-2'>{`No Country found with "${search} ${selected}`}</td></tr>
+
+
                             }
                         </tbody>
                     </table>
