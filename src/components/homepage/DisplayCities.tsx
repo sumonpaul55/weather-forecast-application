@@ -4,8 +4,8 @@ import CityTable from './CityTable'
 const DisplayCities = ({ allcity }: any) => {
     const [userLocation, setUserLocation] = useState("")
     const [search, setSearch] = useState("")
+    const [selected, setSelected] = useState("")
     const [cities, setCities] = useState(allcity)
-
     //    get user location 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -33,6 +33,8 @@ const DisplayCities = ({ allcity }: any) => {
         }
     }
 
+
+
     // getting data according to input field
     useEffect(() => {
         if (search) {
@@ -44,16 +46,32 @@ const DisplayCities = ({ allcity }: any) => {
             setCities(allcity)
         }
     }, [search, allcity])
-
-
     // handle search funtionality
     const handleSearch = (e: any) => {
         setSearch(e.target.value)
     }
 
 
+    // filtering the city base on population
+    useEffect(() => {
+        if (selected) {
+            const selectedValu = selected.split("-")
+            const selectedCity = allcity.filter((city: any) => {
+                return selectedValu[0] <= city?.population && selectedValu[1] >= city?.population
+            })
+            setCities(selectedCity)
+        }
+    }, [selected, allcity])
+
+    // handle filter by population functionality
+    const hanldeSelect = (e: any) => {
+        setSelected(e.target.value)
+    }
+    // 
+
+
     return (
-        <section className='mt-1'>
+        <section className='mt-1 px-2 md:px-0'>
             <div className='container mx-auto'>
                 <div className='flex gap-2 text-white items-center justify-end'>
                     <h1 className='md:text-lg text-center text-black text-sm'>Your Location: </h1>
@@ -63,10 +81,25 @@ const DisplayCities = ({ allcity }: any) => {
                 {/* city table */}
                 <div className='overflow-x-auto pb-5 mt-10'>
                     <div className='flex items-center justify-between'>
-                        <h1 className='md:text-xl font-bold text-center text-white text-sm'>All Cities</h1>
+                        <h1 className='md:text-xl font-bold text-center text-white text-sm hidden sm:block'>All Cities</h1>
                         <div className='flex justify-end items-center gap-2'>
-                            <label htmlFor="">Search By Country</label>
-                            <input onChange={handleSearch} type="text" placeholder='Search Country' className='outline-none border-none max-w-[500px] rounded-md py-1 px-2' />
+                            <label htmlFor="">Population</label>
+                            <select className='p-1 rounded-md outline-0' onChange={hanldeSelect}>
+                                <option className='text-sm p-2' value="">--Select--</option>
+                                <option className='text-sm p-2' value="0-5000">0-5000</option>
+                                <option className='text-sm p-2' value="5000-10000">5000-10000</option>
+                                <option className='text-sm p-2' value="10000-20000">10000-20000</option>
+                                <option className='text-sm p-2' value="20000-30000">20000-30000</option>
+                                <option className='text-sm p-2' value="30000-40000">30000-40000</option>
+                                <option className='text-sm p-2' value="40000-50000">40000-50000</option>
+                                <option className='text-sm p-2' value="50000-60000">50000-60000</option>
+                                <option className='text-sm p-2' value="60000-80000">60000-80000</option>
+                                <option className='text-sm p-2' value="100000-999999">100000+</option>
+                            </select>
+                        </div>
+                        <div className='flex justify-end items-center gap-2'>
+                            <label htmlFor="">Search</label>
+                            <input onChange={handleSearch} type="text" placeholder='City Name' className='outline-none border-none md:max-w-[500px] rounded-md py-1 px-2' />
                         </div>
                     </div>
                     <table className='w-full mt-5 border text-white'>
@@ -82,9 +115,12 @@ const DisplayCities = ({ allcity }: any) => {
                         </thead>
                         <tbody>
                             {
-                                cities?.map((city: any, idx: number) => (
-                                    <CityTable key={idx} city={city} idxnumber={idx}></CityTable>
-                                ))
+                                cities?.length > 1 ?
+                                    cities?.map((city: any, idx: number) => (
+                                        <CityTable key={idx} city={city} idxnumber={idx}></CityTable>
+                                    ))
+                                    :
+                                    <tr><td className='p-2'>{`No Country found with "${search} ${selected}`}</td></tr>
                             }
                         </tbody>
                     </table>
