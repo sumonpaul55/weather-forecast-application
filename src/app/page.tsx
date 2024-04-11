@@ -8,8 +8,8 @@ const Home = async () => {
   const cities: any = await GetCities();
   // console.log(city)
   return (
-    <main className="min-h-screen bg-sky-700 pt-1 herosection">
-      <DisplayCities cities={cities.results} />
+    <main className="min-h-screen bg-sky-600 pt-1 herosection">
+      <DisplayCities allcity={cities.results} />
     </main>
   )
 }

@@ -1,8 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import CityTable from './CityTable'
-const DisplayCities = ({ cities }: any) => {
+const DisplayCities = ({ allcity }: any) => {
     const [userLocation, setUserLocation] = useState("")
+    const [search, setSearch] = useState("")
+    const [cities, setCities] = useState(allcity)
+
     //    get user location 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -29,20 +32,43 @@ const DisplayCities = ({ cities }: any) => {
             console.log(error)
         }
     }
-    // console.log(process.env.NEXT_PUBLIC_APIKEY)
+
+    // getting data according to input field
+    useEffect(() => {
+        if (search) {
+            const searchedCity = allcity.filter((city: any) => {
+                return city.name.toLowerCase().includes(search)
+            })
+            setCities(searchedCity)
+        } else {
+            setCities(allcity)
+        }
+    }, [search, allcity])
+
+
+    // handle search funtionality
+    const handleSearch = (e: any) => {
+        setSearch(e.target.value)
+    }
+
 
     return (
-        <section className='mt-5'>
+        <section className='mt-1'>
             <div className='container mx-auto'>
-                <div className='flex justify-between'>
-                    <h1 className='text-xl font-bold text-center text-white'>All Cities</h1>
-                    <div className='flex gap-2 text-white'>
-                        <h1 className='md:text-lg text-center text-black'>Your Location: </h1>
-                        <span className='text-black'>{userLocation}</span>
-                    </div>
+                <div className='flex gap-2 text-white items-center justify-end'>
+                    <h1 className='md:text-lg text-center text-black text-sm'>Your Location: </h1>
+                    <span className='text-black text-sm'>{userLocation}</span>
                 </div>
+
                 {/* city table */}
-                <div className='overflow-x-auto pb-5'>
+                <div className='overflow-x-auto pb-5 mt-10'>
+                    <div className='flex items-center justify-between'>
+                        <h1 className='md:text-xl font-bold text-center text-white text-sm'>All Cities</h1>
+                        <div className='flex justify-end items-center gap-2'>
+                            <label htmlFor="">Search By Country</label>
+                            <input onChange={handleSearch} type="text" placeholder='Search Country' className='outline-none border-none max-w-[500px] rounded-md py-1 px-2' />
+                        </div>
+                    </div>
                     <table className='w-full mt-5 border text-white'>
                         <thead>
                             <tr className='capitalize text-sm lg:text-lg'>
