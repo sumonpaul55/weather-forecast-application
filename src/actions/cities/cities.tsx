@@ -4,8 +4,11 @@ export default async function GetCities() {
     return allcities
 }
 
-export async function weather(city: string) {
-    const response = await fetch("api of weather");
+// get weather info using lat and long
+export async function getWeather(latLon: object) {
+    // console.log(latLon)
+    const { lat, lon }: any = latLon;
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.NEXT_PUBLIC_WEATHER_API}`);
     const weatherifo = await response.json();
     return weatherifo
 }

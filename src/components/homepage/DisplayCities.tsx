@@ -33,13 +33,11 @@ const DisplayCities = ({ allcity }: any) => {
         }
     }
 
-
-
     // getting data according to input field
     useEffect(() => {
         if (search) {
             const searchedCity = allcity.filter((city: any) => {
-                return city.name.toLowerCase().includes(search.toLowerCase())
+                return city.name.toLowerCase().startWith(search.toLowerCase())
             })
             setCities(searchedCity)
         } else {
@@ -50,7 +48,6 @@ const DisplayCities = ({ allcity }: any) => {
     const handleSearch = (e: any) => {
         setSearch(e.target.value)
     }
-
 
     // filtering the city base on population
     useEffect(() => {
@@ -100,12 +97,11 @@ const DisplayCities = ({ allcity }: any) => {
                         <div className='flex justify-end items-center gap-2 relative'>
                             <label htmlFor="">Search</label>
                             <input onChange={handleSearch} type="text" placeholder='City Name' value={search} className='outline-none border-none md:max-w-[500px] rounded-md py-1 px-2' />
-
                             <div className='absolute w-full top-10 bg-white'>
                                 {
                                     cities?.map((items: any, idx: number) => (
                                         search && search !== items?.name &&
-                                        <div className='px-4 py-2 hover:bg-sky-500 cursor-pointer' onClick={() => setSearch(items?.name)} key={idx}>{items?.name}</div>
+                                        <div className='px-4 py-2 hover:bg-sky-500 cursor-pointer ' onClick={() => setSearch(items?.name)} key={idx}>{items?.name}</div>
                                     ))
                                 }
                             </div>
