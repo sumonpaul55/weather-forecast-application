@@ -37,7 +37,7 @@ const DisplayCities = ({ allcity }: any) => {
     useEffect(() => {
         if (search) {
             const searchedCity = allcity.filter((city: any) => {
-                return city.name.toLowerCase().startWith(search.toLowerCase())
+                return city.name.toLowerCase().startsWith(search.toLowerCase())
             })
             setCities(searchedCity)
         } else {

@@ -7,12 +7,13 @@ interface CityDataProps {
 
 const CityTable: React.FC<CityDataProps> = ({ city, idxnumber }) => {
 
+    // console.log("city", city)
 
     return (
         <tr className='capitalize text-sm lg:text-lg text-center text-indigo-100'>
             <td className='text-capitalize border p-2'>{idxnumber + 1}</td>
             <td className='text-capitalize border p-2'>
-                <Link href={`${city?.name.toLowerCase()}`}>{city?.name}</Link>
+                <Link href={`${city?.geoname_id}`}>{city?.name}</Link>
             </td>
             <td className='text-capitalize border p-2'>{city?.cou_name_en}</td>
             <td className='text-capitalize border p-2'>{city?.country_code}</td>

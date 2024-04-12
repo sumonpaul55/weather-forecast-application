@@ -5,17 +5,15 @@ import React from 'react'
 
 
 const page = async ({ params }: any) => {
-    const { city } = params;
-    let cityName = city;
+    const { cityid } = params;
+    console.log(cityid)
 
-    if (city.includes("%20")) {
-        const cityNames: any = city.split("%20")
-        cityName = `${cityNames[0]} ${cityNames[1]}`
-    }
     const { results }: any = await GetCities();
     const oneCity: any = await results?.find((specificCity: any) => {
-        return (cityName.toLowerCase() === specificCity?.name.toLowerCase())
+        return (cityid === specificCity?.geoname_id)
     })
+
+    console.log(oneCity)
 
     const latLon: object = {
         lat: oneCity?.coordinates?.lat,
@@ -23,7 +21,6 @@ const page = async ({ params }: any) => {
     }
     // get weather data by lat and lon
     const weatherInfo: any = await getWeather(latLon);
-    // console.log(weatherInfo)
     return (
         <main>
             <section className='h-screen flex justify-center items-center'>
