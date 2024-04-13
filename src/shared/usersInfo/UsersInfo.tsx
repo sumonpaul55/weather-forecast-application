@@ -1,14 +1,13 @@
 "use client"
-import { getFarenhiteToCelcius, millisecondsToTime } from '@/actions/cities/cities'
+import { getFarenhiteToCelcius, millisecondsToTime } from '@/actions/getdata/getData'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 import { FaTemperatureHigh } from "react-icons/fa";
 
 const UsersInfo = () => {
     const [userLocation, setUserLocation] = useState("")
     const [temp, setTemp] = useState("")
     const [sunrise, setSunrise] = useState("")
-    const [sunset, setSunset] = useState("")
-
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -22,6 +21,7 @@ const UsersInfo = () => {
             setUserLocation("Geolocation is not supported by this browser.")
         }
     }, [])
+
     // function for get user's location using opencagedata api
     const getUsersCurrentLocation = async (lat: any, long: any) => {
         const query: any = `${lat},${long}`
@@ -29,28 +29,31 @@ const UsersInfo = () => {
         try {
             const res = await fetch(apiUrl)
             const userLocation = await res.json();
-            console.log(userLocation)
             const { name, sys, main }: any = userLocation;
             setUserLocation(`${name}, ${sys.country}`)
+
             // get farenhite from temp
             const celcius = getFarenhiteToCelcius(main?.temp).toFixed(2)
             setTemp(celcius)
-            setSunrise(millisecondsToTime(sys.sunrise))
-            setSunset(millisecondsToTime(sys.sunset))
 
+            // get milisecond to time and setState
+            const sunriseTime: any = millisecondsToTime(sys.sunrise)
+            setSunrise(sunriseTime.time)
         } catch (error) {
-            console.log(error)
+            toast(`${error} Invalid Api requiest`, {
+                position: "bottom-right"
+            });
         }
     }
     return (
         <>
             {temp &&
                 <div className='flex gap-5 w-full justify-end items-center'>
-                    <span className='text-black hidden sm:block text-sm md:text-base'>{userLocation}</span>
+                    <span className='text-black text-sm md:text-base font-bold'>{userLocation}</span>
                     <div className='text-black text-sm md:text-base font-bold flex items-center gap-1'>
                         <FaTemperatureHigh color="#4bd" /> {temp} <span><sup>0</sup>C</span></div>
-                    <span className=''>sunrise: {sunrise}</span>
-                    <span className=''>sunset: {sunset}</span>
+                    <div className='items-center gap-1 hidden sm:flex capitalize'><span className='hidden sm:block'>sunrise:</span> {sunrise}</div>
+                    {/* <div className='flex items-center gap-1'><span className='hidden sm:block'>sunset:</span> {sunset}</div> */}
                 </div>
             }
 

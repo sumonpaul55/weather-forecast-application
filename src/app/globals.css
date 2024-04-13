@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .herosection {
+.herosection {
     background-image:
-        linear-gradient(to bottom, #000000b7, #000000b7),
-        url('../asstes/img/mainbg.jpg');
+        linear-gradient(to bottom, #000000be, #000000be),
+        url('../asstes/img/homebg.jpg');
     background-attachment: fixed;
     background-position: center;
     background-size: 100% 100%;
-} */
+    color: white;
+}

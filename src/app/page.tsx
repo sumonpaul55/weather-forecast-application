@@ -1,5 +1,5 @@
 
-import GetCities from "@/actions/cities/cities";
+import GetCities from "@/actions/getdata/getData";
 import DisplayCities from "@/components/homepage/DisplayCities";
 import React from "react";
 

@@ -1,4 +1,4 @@
-import GetCities, { getWeather } from '@/actions/cities/cities'
+import GetCities, { getWeather } from '@/actions/getdata/getData'
 import CityWeather from '@/components/cityWeather/CityWeather'
 import React from 'react'
 
@@ -20,7 +20,7 @@ const page = async ({ params }: any) => {
             <section className='h-screen flex justify-center mt-5'>
                 <div className="container mx-auto">
                     <div>
-                        <CityWeather weather={weatherInfo}></CityWeather>
+                        <CityWeather weathers={weatherInfo}></CityWeather>
                     </div>
                 </div>
             </section>
