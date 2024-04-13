@@ -2,36 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import CityTable from './CityTable'
 const DisplayCities = ({ allcity }: any) => {
-    const [userLocation, setUserLocation] = useState("")
+
     const [search, setSearch] = useState("")
     const [selected, setSelected] = useState("")
     const [cities, setCities] = useState(allcity)
     //    get user location 
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const { latitude, longitude } = position.coords;
-                getUsersCurrentLocation(latitude, longitude)
-            }, error => {
-                setUserLocation(error.message)
-            })
-        } else {
-            setUserLocation("Geolocation is not supported by this browser.")
-        }
-    }, [])
-    // function for get user's location using opencagedata api
-    const getUsersCurrentLocation = async (lat: any, long: any) => {
-        const query: any = `${lat},${long}`
-        const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${process.env.NEXT_PUBLIC_APIKEY}&language=en&pretty=1`
-        try {
-            const res = await fetch(apiUrl)
-            const userLocation = await res.json();
-            const { city, country, county } = userLocation?.results[0]?.components;
-            setUserLocation(`${county}, ${city}, ${country}`)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
 
     // getting data according to input field
     useEffect(() => {
@@ -70,10 +46,7 @@ const DisplayCities = ({ allcity }: any) => {
     return (
         <section className='mt-1 px-2 md:px-0'>
             <div className='container mx-auto'>
-                <div className='flex gap-2 text-white items-center justify-end'>
-                    <h1 className='md:text-lg text-center text-black text-sm'>Your Location: </h1>
-                    <span className='text-black text-sm'>{userLocation}</span>
-                </div>
+
 
                 {/* city table */}
                 <div className='overflow-x-auto pb-5 mt-10'>
@@ -96,17 +69,16 @@ const DisplayCities = ({ allcity }: any) => {
                         </div>
                         <div className='flex justify-end items-center gap-2 relative'>
                             <label htmlFor="">Search</label>
-                            <input onChange={handleSearch} type="text" placeholder='City Name' value={search} className='outline-none border-none md:max-w-[500px] rounded-md py-1 px-2' />
-                            <div className='absolute w-full top-10 bg-white'>
+                            <input onChange={handleSearch} type="text" placeholder='City Name' value={search} className='outline-none border-none rounded-md py-1 px-2' />
+                            <div className='absolute w-full top-10 bg-white max-h-[300px] overflow-y-auto'>
                                 {
                                     cities?.map((items: any, idx: number) => (
                                         search && search !== items?.name &&
-                                        <div className='px-4 py-2 hover:bg-sky-500 cursor-pointer ' onClick={() => setSearch(items?.name)} key={idx}>{items?.name}</div>
+                                        <div className='px-4 py-2 hover:bg-sky-500 cursor-pointer' onClick={() => setSearch(items?.name)} key={idx}>{items?.name}</div>
                                     ))
                                 }
                             </div>
                         </div>
-
                     </div>
                     <table className='w-full mt-5 border text-white'>
                         <thead>
@@ -125,8 +97,6 @@ const DisplayCities = ({ allcity }: any) => {
                                     : cities?.map((city: any, idx: number) => (
                                         <CityTable key={idx} city={city} idxnumber={idx}></CityTable>
                                     ))
-
-
                             }
                         </tbody>
                     </table>
