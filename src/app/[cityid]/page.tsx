@@ -17,13 +17,7 @@ const page = async ({ params }: any) => {
     const weatherInfo: any = await getWeather(latLon);
     return (
         <main>
-            <section className='h-screen flex justify-center mt-5'>
-                <div className="container mx-auto">
-                    <div>
-                        <CityWeather weathers={weatherInfo}></CityWeather>
-                    </div>
-                </div>
-            </section>
+            <CityWeather weathers={weatherInfo}></CityWeather>
         </main>
 
     )

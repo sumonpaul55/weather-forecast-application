@@ -11,3 +11,13 @@
     background-size: 100% 100%;
     color: white;
 }
+
+.weather-page {
+    background-image:
+        linear-gradient(to bottom, #00000040, #00000040),
+        url('../asstes/img/weatherbg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
