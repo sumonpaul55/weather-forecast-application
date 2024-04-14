@@ -30,7 +30,7 @@ const CityWeather = ({ weathers }: any) => {
                     <h2 className='md:text-xl font-semibold'>Date: {date}</h2>
                 </div>
                 <div className='flex gap-5 mt-12 items-center flex-col lg:flex-row'>
-                    <div className='flex justify-between items-center lg:w-7/12 w-full p-3 lg:p-6 shadow bg-white bg-opacity-70 rounded-md'>
+                    <div className='flex justify-between items-center lg:w-7/12 w-full p-3 lg:p-7 shadow bg-white bg-opacity-70 rounded-md'>
                         <div className='flex flex-col gap-4'>
                             <div className='flex'>
                                 <span className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl'><FaTemperatureFull /></span>
@@ -71,7 +71,7 @@ const CityWeather = ({ weathers }: any) => {
                         </div>
                     </div>
                     <div className='lg:flex-1 w-full relative'>
-                        <Image src={akyCondition[0] === "overcast clouds" ? cloudy : akyCondition[0] === "few clouds" ? fewCloudes : akyCondition[0] === "broken clouds" ? brokenCloude : shiny} alt={akyCondition[0]} width={500} height={200} className='w-full rounded-md animate-pulse' style={{ animationDelay: "4s", animationDuration: "3s" }} />
+                        <Image src={akyCondition[0] === "overcast clouds" ? cloudy : akyCondition[0] === "few clouds" ? fewCloudes : akyCondition[0] === "broken clouds" ? brokenCloude : shiny} alt={akyCondition[0]} width={500} height={200} className='w-full lg:h-[300px] rounded-md animate-pulse' style={{ animationDelay: "4s", animationDuration: "3s" }} />
                         <h2 className='text-white font-bold sm:text-xl md:text-xl absolute bottom-7 left-[20%]'>Sky condition</h2>
                     </div>
                 </div>
