@@ -23,14 +23,14 @@ const CityWeather = ({ weathers }: any) => {
         return condition?.description.toLowerCase()
     })
     return (
-        <section className={`h-screen pt-5 ${akyCondition[0] === "overcast clouds" ? "bg-gray-400" : akyCondition[0] === "broken clouds" ? "bg-slate-600" : akyCondition[0] === "few clouds" ? "bg-gray-300" : "white"}`}>
+        <section className={`h-screen pt-5 px-2 md:px-0 ${akyCondition[0] === "overcast clouds" ? "bg-gray-400" : akyCondition[0] === "broken clouds" ? "bg-slate-600" : akyCondition[0] === "few clouds" ? "bg-gray-300" : "white"}`}>
             <div className='container mx-auto'>
                 <div className='flex justify-evenly px-2 py-20 rounded-md weather-page'>
                     <h1 className='text-center sm:text-lg md:text-xl lg:text-2xl font-bold'>City: <span className=''>{name}, {sys?.country}</span></h1>
                     <h2 className='md:text-xl font-semibold'>Date: {date}</h2>
                 </div>
-                <div className='flex gap-5 mt-12 items-center'>
-                    <div className='flex justify-between items-center md:w-7/12 p-2 md:p-4 bg-white bg-opacity-70 rounded-md'>
+                <div className='flex gap-5 mt-12 items-center flex-col lg:flex-row'>
+                    <div className='flex justify-between items-center lg:w-7/12 w-full p-3 lg:p-6 shadow bg-white bg-opacity-70 rounded-md'>
                         <div className='flex flex-col gap-4'>
                             <div className='flex'>
                                 <span className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl'><FaTemperatureFull /></span>
@@ -70,13 +70,13 @@ const CityWeather = ({ weathers }: any) => {
                             <h4 className='font-semibold'>sea_level: <span className='font-semibold text-indigo-600'>{sea_level}</span> </h4>
                         </div>
                     </div>
-                    <div className='flex-1 relative'>
+                    <div className='lg:flex-1 w-full relative'>
                         <Image src={akyCondition[0] === "overcast clouds" ? cloudy : akyCondition[0] === "few clouds" ? fewCloudes : akyCondition[0] === "broken clouds" ? brokenCloude : shiny} alt={akyCondition[0]} width={500} height={200} className='w-full rounded-md animate-pulse' style={{ animationDelay: "4s", animationDuration: "3s" }} />
                         <h2 className='text-white font-bold sm:text-xl md:text-xl absolute bottom-7 left-[20%]'>Sky condition</h2>
                     </div>
                 </div>
                 <div className='mt-10 text-center'>
-                    <button className='bg-indigo-600 text-white px-2 py-1' onClick={() => setFarenhite(!farenHite)}>Switch to Farenhite</button>
+                    <button className='bg-indigo-600 text-white px-2 py-1' onClick={() => setFarenhite(!farenHite)}>Switch to {!farenHite ? "Farenhite" : "Celcius"}</button>
                 </div>
             </div>
         </section>
