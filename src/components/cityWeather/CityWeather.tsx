@@ -23,18 +23,18 @@ const CityWeather = ({ weathers }: any) => {
         return condition?.description.toLowerCase()
     })
     return (
-        <section className={`h-screen pt-5 ${akyCondition[0] === "overcast clouds" ? "bg-gray-500" : akyCondition[0] === "broken clouds" ? "bg-slate-400" : akyCondition[0] === "few clouds" ? "bg-gray-300" : "white"}`}>
+        <section className={`h-screen pt-5 ${akyCondition[0] === "overcast clouds" ? "bg-gray-400" : akyCondition[0] === "broken clouds" ? "bg-slate-600" : akyCondition[0] === "few clouds" ? "bg-gray-300" : "white"}`}>
             <div className='container mx-auto'>
                 <div className='flex justify-evenly px-2 py-20 rounded-md weather-page'>
                     <h1 className='text-center sm:text-lg md:text-xl lg:text-2xl font-bold'>City: <span className=''>{name}, {sys?.country}</span></h1>
                     <h2 className='md:text-xl font-semibold'>Date: {date}</h2>
                 </div>
                 <div className='flex gap-5 mt-12 items-center'>
-                    <div className='flex justify-between items-center md:w-7/12 p-2 md:p-4 bg-white bg-opacity-80 rounded-md'>
+                    <div className='flex justify-between items-center md:w-7/12 p-2 md:p-4 bg-white bg-opacity-70 rounded-md'>
                         <div className='flex flex-col gap-4'>
                             <div className='flex'>
                                 <span className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl'><FaTemperatureFull /></span>
-                                <h1 className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold'>{celciusTemp}<span className='font-medium'><sup>O</sup></span></h1>
+                                <h1 className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold'>{!farenHite ? celciusTemp : main?.temp}<span className='font-medium'><sup>O</sup></span></h1>
                             </div>
                             <div>
                                 {
@@ -61,9 +61,9 @@ const CityWeather = ({ weathers }: any) => {
                             </div>
                         </div>
                         <div className='space-y-3'>
-                            <h4 className='font-semibold'>Feel like: <span className='font-semibold text-indigo-600'>{feelikeTemp}<sup>o</sup></span> </h4>
-                            <h4 className='font-semibold'>Maximum Temp: <span className='font-semibold text-indigo-600'>{maximumTemp}<sup>o</sup></span> </h4>
-                            <h4 className='font-semibold'>Minimum Temp: <span className='font-semibold text-indigo-600'>{mintemp}<sup>o</sup></span> </h4>
+                            <h4 className='font-semibold'>Feel like: <span className='font-semibold text-indigo-600'>{!farenHite ? feelikeTemp : main?.feels_like}<sup>o</sup></span> </h4>
+                            <h4 className='font-semibold'>Maximum Temp: <span className='font-semibold text-indigo-600'>{!farenHite ? maximumTemp : main?.temp_max}<sup>o</sup></span> </h4>
+                            <h4 className='font-semibold'>Minimum Temp: <span className='font-semibold text-indigo-600'>{!farenHite ? mintemp : main?.temp_min}<sup>o</sup></span> </h4>
                             <h4 className='font-semibold'>grnd_level: <span className='font-semibold text-indigo-600'>{grnd_level}</span> </h4>
                             <h4 className='font-semibold'>pressure: <span className='font-semibold text-indigo-600'>{pressure}</span> </h4>
                             <h4 className='font-semibold'>humidity: <span className='font-semibold text-indigo-600'>{humidity}</span> </h4>
